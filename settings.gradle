@@ -1,4 +1,5 @@
 rootProject.name = 'file-manager-spring-boot'
 include 'storage-service'
 include 'resource-service'
+include 'common'
 
