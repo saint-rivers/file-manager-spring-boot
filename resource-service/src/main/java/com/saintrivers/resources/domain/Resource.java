@@ -24,6 +24,7 @@ public class Resource {
     @NotBlank
     private String displayName;
     @NotBlank
+    @Column(name = "file_name")
     private String fileName;
     @CreatedDate
     private LocalDateTime uploadTime;
