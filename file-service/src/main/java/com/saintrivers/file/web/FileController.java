@@ -30,7 +30,7 @@ public class FileController {
                 .body(BodyInserters.fromMultipartData(builder.build()))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(UploadEvent.class).log();
+                .bodyToMono(UploadEvent.class);
 
         var uploadDetails = uploadResponse
                 .doOnNext(queueSender::send)
