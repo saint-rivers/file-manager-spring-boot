@@ -11,7 +11,7 @@ public class ClientConfig {
 
     @Bean("storageClient")
     public WebClient storageClient() {
-        return WebClient.builder().baseUrl("http://localhost:8080/resources")
+        return WebClient.builder().baseUrl("http://localhost:8080/storage")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
