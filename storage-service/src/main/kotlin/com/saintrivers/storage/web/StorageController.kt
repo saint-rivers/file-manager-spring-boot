@@ -1,6 +1,6 @@
 package com.saintrivers.storage.web
 
-import com.saintrivers.common.dto.UploadEvent
+import com.saintrivers.common.dto.upload.UploadEvent
 import com.saintrivers.storage.service.StorageService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

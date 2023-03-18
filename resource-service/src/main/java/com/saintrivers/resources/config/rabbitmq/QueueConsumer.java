@@ -1,6 +1,6 @@
-package com.saintrivers.resources.config;
+package com.saintrivers.resources.config.rabbitmq;
 
-import com.saintrivers.common.dto.UploadEvent;
+import com.saintrivers.common.dto.upload.UploadEvent;
 import com.saintrivers.resources.service.ResourceService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;

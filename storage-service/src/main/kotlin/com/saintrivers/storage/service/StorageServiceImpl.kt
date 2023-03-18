@@ -1,6 +1,6 @@
 package com.saintrivers.storage.service
 
-import com.saintrivers.common.dto.UploadEvent
+import com.saintrivers.common.dto.upload.UploadEvent
 import com.saintrivers.storage.exception.BadUploadException
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.FileUploadException
@@ -30,7 +30,12 @@ class StorageServiceImpl : StorageService {
         // attempt to save
         kotlin.runCatching {
             Files.copy(file.inputStream, uploadedTargetPath)
-            return UploadEvent(file.originalFilename!!, formattedName, file.getExtension(), LocalDateTime.now())
+            return UploadEvent(
+                file.originalFilename!!,
+                formattedName,
+                file.getExtension(),
+                LocalDateTime.now()
+            )
         }.onFailure {
             log.error { "Error saving file: ${it.message}" }
         }

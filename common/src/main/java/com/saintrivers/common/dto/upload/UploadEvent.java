@@ -1,4 +1,4 @@
-package com.saintrivers.common.dto;
+package com.saintrivers.common.dto.upload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.saintrivers.file.config.rabbit;
 
-import com.saintrivers.common.dto.UploadEvent;
+import com.saintrivers.common.dto.upload.UploadEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

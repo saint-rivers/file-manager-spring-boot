@@ -1,6 +1,6 @@
 package com.saintrivers.storage.service
 
-import com.saintrivers.common.dto.UploadEvent
+import com.saintrivers.common.dto.upload.UploadEvent
 import org.springframework.web.multipart.MultipartFile
 
 interface StorageService {
