@@ -1,21 +1,28 @@
 package com.saintrivers.storage.web
 
-import com.saintrivers.storage.service.StorageServiceImpl
+import com.saintrivers.common.dto.UploadEvent
+import com.saintrivers.storage.service.StorageService
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/v1/storage")
-class StorageController(val storageService: StorageServiceImpl) {
+class StorageController(val storageService: StorageService) {
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadFile(@RequestPart("selectedFile") file: MultipartFile) {
         storageService.saveFile("uploads", file)
+    }
+
+    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE], value = ["/{destinationPath}"])
+    fun uploadFileWithDirectory(
+        @RequestPart("selectedFile") file: MultipartFile,
+        @PathVariable destinationPath: String
+    ): ResponseEntity<UploadEvent> {
+        val payload = storageService.saveFile(destinationPath, file)
+        return ResponseEntity.ok().body(payload)
     }
 
     @GetMapping

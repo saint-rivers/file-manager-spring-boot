@@ -1,10 +1,7 @@
 package com.saintrivers.storage.service
 
 import com.saintrivers.common.dto.UploadEvent
-import com.saintrivers.storage.config.rabbit.QueueSender
 import com.saintrivers.storage.exception.BadUploadException
-import com.saintrivers.storage.model.FileUploadStatus
-import com.saintrivers.storage.model.UploadDto
 import mu.KotlinLogging
 import org.apache.tomcat.util.http.fileupload.FileUploadException
 import org.springframework.stereotype.Service
@@ -19,11 +16,11 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Service
-class StorageServiceImpl(val queueSender: QueueSender) : StorageService {
+class StorageServiceImpl : StorageService {
 
     private val log = KotlinLogging.logger {}
 
-    override fun saveFile(destination: String, file: MultipartFile): UploadDto {
+    override fun saveFile(destination: String, file: MultipartFile): UploadEvent {
         if (file.originalFilename == null) throw BadUploadException()
 
         val uploadsFolderPath: Path = Paths.get(destination)
@@ -33,15 +30,7 @@ class StorageServiceImpl(val queueSender: QueueSender) : StorageService {
         // attempt to save
         kotlin.runCatching {
             Files.copy(file.inputStream, uploadedTargetPath)
-            queueSender.send(
-                UploadEvent(
-                    file.originalFilename,
-                    formattedName,
-                    file.getExtension(),
-                    LocalDateTime.now()
-                )
-            )
-            return UploadDto(formattedName, file.originalFilename!!, FileUploadStatus.OK)
+            return UploadEvent(file.originalFilename!!, formattedName, file.getExtension(), LocalDateTime.now())
         }.onFailure {
             log.error { "Error saving file: ${it.message}" }
         }
