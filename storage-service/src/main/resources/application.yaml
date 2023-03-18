@@ -1,13 +1,5 @@
-
-server:
-  port: 9092
-
 spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
-queue:
-  name: upload.event
+  application:
+    name: storage-service
+  config:
+    import: optional:configserver:http://localhost:8888

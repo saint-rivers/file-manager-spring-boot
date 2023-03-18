@@ -1,23 +1,5 @@
-server:
-  port: 9091
-
 spring:
-  h2:
-    console:
-      enabled: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
-queue:
-  name: upload.event
+  application:
+    name: resource-service
+  config:
+    import: optional:configserver:http://localhost:8888

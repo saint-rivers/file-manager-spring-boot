@@ -1,16 +1,5 @@
-
-server:
-  port: 7011
-
 spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
-queue:
-  name: upload.event
-
-storage:
-  destination: uploads
+  application:
+    name: file-service
+  config:
+    import: optional:configserver:http://localhost:8888
