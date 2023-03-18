@@ -19,4 +19,5 @@ spring:
     username: guest
     password: guest
 
-queue.name: upload.event
+queue:
+  name: upload.event
