@@ -1,6 +1,7 @@
 package com.saintrivers.file.service;
 
 import com.saintrivers.common.dto.upload.UploadEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,10 +11,12 @@ import com.saintrivers.file.config.rabbit.QueueSender;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriUtils;
 
 @Service
-public class UploadServiceImpl implements UploadService{
- private final WebClient storageClient;
+@Slf4j
+public class UploadServiceImpl implements UploadService {
+    private final WebClient storageClient;
     private final QueueSender queueSender;
 
     @Value("${storage.destination}")
@@ -22,6 +25,7 @@ public class UploadServiceImpl implements UploadService{
     public UploadServiceImpl(@Qualifier("storageClient") WebClient storageClient, QueueSender queueSender) {
         this.storageClient = storageClient;
         this.queueSender = queueSender;
+        System.out.println(storageDestination);
     }
 
     @Override

@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: storage-service
+          uri: http://storage-service:8080
+          predicates:
+            - Path=/storage/**
+          filters:
+            - RewritePath=/storage/(?<path>.*), /$\{path}
+
+        - id: resources-service
+          uri: http://resource-service:8080
+          predicates:
+            - Path=/resources/**
+          filters:
+            - RewritePath=/resources/(?<path>.*), /$\{path}
+
+        - id: upload-service
+          uri: http://file-serivce:8080
+          predicates:
+            - Path=/files/**
+          filters:
+            - RewritePath=/files/(?<path>.*), /$\{path}

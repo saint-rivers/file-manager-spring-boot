@@ -13,7 +13,7 @@ class StorageController(val storageService: StorageService) {
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadFile(@RequestPart("selectedFile") file: MultipartFile) {
-        storageService.saveFile("uploads", file)
+        storageService.saveFile("/opt/resources", file)
     }
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE], value = ["/{destinationPath}"])

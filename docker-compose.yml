@@ -1,9 +1,80 @@
 version: "3.8"
 
+x-spring-profile: &spring-docker-profile
+  SPRING_PROFILES_ACTIVE: docker
+  SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+
+x-rabbitmq: &rabbitmq
+              rabbitmq
+
+x-config-server: &config-server
+                   config-server
+
+x-gateway-service: &gateway-service
+                     gateway-service
 services:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     ports:
-        - "5672:5672"
-        - "15672:15672"
+      - "5672:5672"
+      - "15672:15672"
+
+  resource-api:
+    build: resource-service
+    container_name: resource-service
+    restart: on-failure
+    depends_on:
+      - *rabbitmq
+      - *config-server
+      - *gateway-service
+    environment:
+      <<: *spring-docker-profile
+    ports:
+      - "9091:8080"
+
+  storage-api:
+    build: storage-service
+    container_name: storage-service
+    restart: on-failure
+    depends_on:
+      - *rabbitmq
+      - *config-server
+      - *gateway-service
+    environment:
+      <<: *spring-docker-profile
+    volumes:
+      - ./uploads:/opt/resources
+    ports:
+      - "9092:8080"
+
+  file-api:
+    build: file-service
+    container_name: file-service
+    restart: on-failure
+    depends_on:
+      - *rabbitmq
+      - *config-server
+      - *gateway-service
+    environment:
+      <<: *spring-docker-profile
+    ports:
+      - "7011:8080"
+
+  config-server:
+    build: *config-server
+    container_name: *config-server
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+    ports:
+      - "8888:8888"
+
+  gateway-service:
+    build: *gateway-service
+    container_name: *gateway-service
+    restart: unless-stopped
+    environment:
+      <<: *spring-docker-profile
+    ports:
+      - "8080:8080"

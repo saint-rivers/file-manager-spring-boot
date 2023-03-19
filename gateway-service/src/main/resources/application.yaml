@@ -1,33 +1,7 @@
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: storage-service
-          uri: http://localhost:9092
-          predicates:
-            - Path=/storage/**
-          filters:
-            - RewritePath=/storage/(?<path>.*), /$\{path}
-
-        - id: resources-service
-          uri: http://localhost:9091
-          predicates:
-            - Path=/resources/**
-          filters:
-            - RewritePath=/resources/(?<path>.*), /$\{path}
-
-        - id: upload-service
-          uri: http://localhost:7011
-          predicates:
-            - Path=/files/**
-          filters:
-            - RewritePath=/files/(?<path>.*), /$\{path}
-
+  application:
+    name: gateway-service
+  config:
+    import: optional:configserver:http://localhost:8888
 server:
   port: 8080
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"

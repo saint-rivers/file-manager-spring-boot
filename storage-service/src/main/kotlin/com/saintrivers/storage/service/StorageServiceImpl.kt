@@ -22,8 +22,7 @@ class StorageServiceImpl : StorageService {
 
     override fun saveFile(destination: String, file: MultipartFile): UploadEvent {
         if (file.originalFilename == null) throw BadUploadException()
-
-        val uploadsFolderPath: Path = Paths.get(destination)
+        val uploadsFolderPath: Path = Paths.get("/opt/$destination")
         val formattedName = file.originalFilename!!.generateUniqueName()
         val uploadedTargetPath = uploadsFolderPath.resolve(formattedName)
 

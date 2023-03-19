@@ -3,3 +3,6 @@ server:
 
 storage:
   destination: uploads
+
+gateway:
+  hostname: localhost:8080

@@ -33,7 +33,7 @@ subprojects {
     }
 
     dependencies {
-        if (project.name.contains("service") && !project.name.contains("gateway")){
+        if (project.name.contains("service")){
             implementation 'org.springframework.cloud:spring-cloud-starter-config:4.0.1'
         }
     }
